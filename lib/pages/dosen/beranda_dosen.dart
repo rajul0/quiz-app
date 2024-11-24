@@ -1,6 +1,5 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz_app/pages/dosen/halaman_manajemen_quiz.dart';
+import 'package:quiz_app/pages/dosen/halaman_kelas/halaman_manajemen_kelas.dart';
 
 class BerandaDosen extends StatefulWidget {
   const BerandaDosen({super.key});
@@ -62,10 +61,7 @@ class _BerandaMahasiswaState extends State<BerandaDosen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HalamanManajemenQuizDosen()));
+                  Navigator.of(context).push(_createRoute());
                 },
                 child: Container(
                   width: double.infinity,
@@ -89,7 +85,7 @@ class _BerandaMahasiswaState extends State<BerandaDosen> {
                       ),
                       Align(
                         alignment: Alignment.center,
-                        child: Text("Manajemen Kuis",
+                        child: Text("Manajemen Kelas",
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 14.0,
@@ -189,28 +185,26 @@ class _BerandaMahasiswaState extends State<BerandaDosen> {
           ),
         ),
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Colors.white,
-          color: Color(0xFFE6E6FA),
-          animationDuration: Duration(milliseconds: 300),
-          onTap: (index) {
-            print(index);
-          },
-          items: [
-            Image.asset("assets/icon/home-ic.png", width: 25.0),
-            Container(
-                width: 50.0,
-                padding: EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 2.0,
-                  ),
-                  borderRadius: BorderRadius.circular(50.0),
-                ),
-                child: Image.asset("assets/icon/room-class-ic.png")),
-            Image.asset("assets/icon/profil-ic.png", width: 25.0)
-          ]),
     );
   }
+}
+
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        HalamanManajemenKelasDosen(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0); // Start from below the screen
+      const end = Offset.zero; // End at the current position
+      const curve = Curves.easeInOut;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      var offsetAnimation = animation.drive(tween);
+
+      return SlideTransition(
+        position: offsetAnimation,
+        child: child,
+      );
+    },
+  );
 }

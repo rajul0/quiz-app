@@ -1,14 +1,14 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/pages/dosen/halaman_kelas/halaman_buat_kuis.dart';
 
-class HalamanManajemenQuizDosen extends StatefulWidget {
-  const HalamanManajemenQuizDosen({super.key});
+class HalamanManajemenKelasDosen extends StatefulWidget {
+  const HalamanManajemenKelasDosen({super.key});
 
   @override
-  State<HalamanManajemenQuizDosen> createState() => _BerandaMahasiswaState();
+  State<HalamanManajemenKelasDosen> createState() => _BerandaMahasiswaState();
 }
 
-class _BerandaMahasiswaState extends State<HalamanManajemenQuizDosen> {
+class _BerandaMahasiswaState extends State<HalamanManajemenKelasDosen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,46 +18,59 @@ class _BerandaMahasiswaState extends State<HalamanManajemenQuizDosen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    iconSize: 25.0,
+                    icon: Icon(
+                      Icons.arrow_back,
+                    )),
+              ),
+              SizedBox(
+                height: 90.0,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HalamanBuatKuis()));
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15.0),
+                  width: 160.0,
+                  height: 80.0,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFE6E6FA),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(
-                        Icons.person_outline_rounded,
-                        size: 35.0,
+                        Icons.add,
+                        size: 28.0,
                       ),
                       SizedBox(
                         width: 15.0,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Halo Nadia",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14.0,
-                                fontFamily: "Inter",
-                              )),
-                          Text("Dosen",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14.0,
-                                fontFamily: "Inter",
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ],
+                      Text(
+                        "Buat Kuis",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                            fontFamily: "Inter",
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
-                  Image.asset(
-                    "assets/icon/notif-ic.png",
-                    width: 30.0,
-                  ),
-                ],
+                ),
               ),
               SizedBox(
-                height: 90.0,
+                height: 45.0,
               ),
               GestureDetector(
                 onTap: () {},
@@ -80,7 +93,7 @@ class _BerandaMahasiswaState extends State<HalamanManajemenQuizDosen> {
                         width: 15.0,
                       ),
                       Text(
-                        "Tambah Kuis",
+                        "Buat Kelas",
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 14.0,
@@ -159,32 +172,43 @@ class _BerandaMahasiswaState extends State<HalamanManajemenQuizDosen> {
                   ),
                 ),
               ),
+              SizedBox(height: 45.0),
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15.0),
+                  width: 160.0,
+                  height: 80.0,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFE6E6FA),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.list,
+                        size: 28.0,
+                      ),
+                      SizedBox(
+                        width: 15.0,
+                      ),
+                      Text(
+                        "Daftar Kelas",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                            fontFamily: "Inter",
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Colors.white,
-          color: Color(0xFFE6E6FA),
-          animationDuration: Duration(milliseconds: 300),
-          onTap: (index) {
-            print(index);
-          },
-          items: [
-            Image.asset("assets/icon/home-ic.png", width: 25.0),
-            Container(
-                width: 50.0,
-                padding: EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 2.0,
-                  ),
-                  borderRadius: BorderRadius.circular(50.0),
-                ),
-                child: Image.asset("assets/icon/room-class-ic.png")),
-            Image.asset("assets/icon/profil-ic.png", width: 25.0)
-          ]),
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/pages/mahasiswa/daftar_quiz_mhs.dart';
 import 'package:quiz_app/pages/mahasiswa/hasil_quiz_mhs.dart';
@@ -160,18 +159,6 @@ class _BerandaMahasiswaState extends State<BerandaMahasiswa> {
           ),
         ),
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Colors.white,
-          color: Color(0xFFE6E6FA),
-          animationDuration: Duration(milliseconds: 300),
-          onTap: (index) {
-            print(index);
-          },
-          items: [
-            Image.asset("assets/icon/home-ic.png", width: 25.0),
-            Image.asset("assets/icon/announcement-ic.png", width: 25.0),
-            Image.asset("assets/icon/profil-ic.png", width: 25.0)
-          ]),
     );
   }
 }

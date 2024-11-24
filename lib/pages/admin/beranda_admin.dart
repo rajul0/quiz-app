@@ -1,22 +1,14 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz_app/pages/mahasiswa/daftar_quiz_mhs.dart';
-import 'package:quiz_app/pages/mahasiswa/hasil_quiz_mhs.dart';
+import 'package:quiz_app/pages/halaman_dalam_pengembangan.dart';
 
-class BerandaAdmin extends StatefulWidget {
-  const BerandaAdmin({super.key});
+class HalamanBerandaAdmin extends StatefulWidget {
+  const HalamanBerandaAdmin({super.key});
 
   @override
-  State<BerandaAdmin> createState() => _BerandaMahasiswaState();
+  State<HalamanBerandaAdmin> createState() => _HalamanBerandaAdminState();
 }
 
-class _BerandaMahasiswaState extends State<BerandaAdmin> {
-  // ignore: unused_field
-  String _searchKeyword = "";
-
-  // ignore: unused_field
-  String _errorMessage = '';
-
+class _HalamanBerandaAdminState extends State<HalamanBerandaAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +64,7 @@ class _BerandaMahasiswaState extends State<BerandaAdmin> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => HalamanDaftarQuizMHS()));
+                          builder: (context) => HalamanDalamPengembangan()));
                 },
                 child: Container(
                   width: double.infinity,
@@ -104,7 +96,7 @@ class _BerandaMahasiswaState extends State<BerandaAdmin> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => HalamanHasilQuizMHS()));
+                          builder: (context) => HalamanDalamPengembangan()));
                 },
                 child: Container(
                   width: double.infinity,
@@ -132,18 +124,6 @@ class _BerandaMahasiswaState extends State<BerandaAdmin> {
           ),
         ),
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Colors.white,
-          color: Color(0xFFE6E6FA),
-          animationDuration: Duration(milliseconds: 300),
-          onTap: (index) {
-            print(index);
-          },
-          items: [
-            Image.asset("assets/icon/home-ic.png", width: 25.0),
-            Image.asset("assets/icon/announcement-ic.png", width: 25.0),
-            Image.asset("assets/icon/profil-ic.png", width: 25.0)
-          ]),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/pages/admin/beranda_admin.dart';
-import 'package:quiz_app/pages/dosen/beranda_dosen.dart';
-import 'package:quiz_app/pages/mahasiswa/beranda_mhs.dart';
+import 'package:quiz_app/pages/admin/navbar_admin.dart';
+import 'package:quiz_app/pages/dosen/navbar_dosen.dart';
+import 'package:quiz_app/pages/mahasiswa/navbar_mhs.dart';
 
 class HalamanAwal extends StatefulWidget {
   const HalamanAwal({super.key});
@@ -22,7 +22,7 @@ class _HalamanDaftarQuizMHSState extends State<HalamanAwal> {
           GestureDetector(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BerandaAdmin()));
+                  MaterialPageRoute(builder: (context) => NavbarAdmin()));
             },
             child: Container(
               alignment: Alignment.center,
@@ -48,7 +48,7 @@ class _HalamanDaftarQuizMHSState extends State<HalamanAwal> {
           GestureDetector(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BerandaDosen()));
+                  MaterialPageRoute(builder: (context) => NavbarDosen()));
             },
             child: Container(
               alignment: Alignment.center,
@@ -59,7 +59,7 @@ class _HalamanDaftarQuizMHSState extends State<HalamanAwal> {
                 borderRadius: BorderRadius.circular(25.0),
               ),
               child: Text(
-                "Dosen",
+                "Pengajar",
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 14.0,
@@ -74,7 +74,7 @@ class _HalamanDaftarQuizMHSState extends State<HalamanAwal> {
           GestureDetector(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BerandaMahasiswa()));
+                  MaterialPageRoute(builder: (context) => NavbarMahasiswa()));
             },
             child: Container(
               alignment: Alignment.center,
@@ -85,7 +85,7 @@ class _HalamanDaftarQuizMHSState extends State<HalamanAwal> {
                 borderRadius: BorderRadius.circular(25.0),
               ),
               child: Text(
-                "Mahasiswa",
+                "Pelajar",
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 14.0,
