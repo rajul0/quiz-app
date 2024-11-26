@@ -1,20 +1,25 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz_app/pages/halaman_dalam_pengembangan.dart';
-import 'package:quiz_app/pages/mahasiswa/beranda_mhs.dart';
+import 'package:quiz_app/halaman/admin/beranda_admin.dart';
+import 'package:quiz_app/halaman/halaman_dalam_pengembangan.dart';
 
-class NavbarMahasiswa extends StatefulWidget {
-  const NavbarMahasiswa({super.key});
+class NavbarAdmin extends StatefulWidget {
+  const NavbarAdmin({super.key});
 
   @override
-  State<NavbarMahasiswa> createState() => _NavbarMHSState();
+  State<NavbarAdmin> createState() => _BerandaMahasiswaState();
 }
 
-class _NavbarMHSState extends State<NavbarMahasiswa> {
+class _BerandaMahasiswaState extends State<NavbarAdmin> {
+  // ignore: unused_field
+  String _searchKeyword = "";
+
+  // ignore: unused_field
+  String _errorMessage = '';
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    BerandaMahasiswa(),
+    HalamanBerandaAdmin(),
     HalamanDalamPengembangan(),
     HalamanDalamPengembangan(),
   ];
@@ -34,7 +39,7 @@ class _NavbarMHSState extends State<NavbarMahasiswa> {
           },
           items: [
             Image.asset("assets/icon/home-ic.png", width: 25.0),
-            Image.asset("assets/icon/announcement-ic.png", width: 25.0),
+            Image.asset("assets/icon/manage-people-ic.png", width: 35.0),
             Image.asset("assets/icon/profil-ic.png", width: 25.0)
           ]),
     );

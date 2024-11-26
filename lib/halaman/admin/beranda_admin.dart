@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/pages/halaman_dalam_pengembangan.dart';
+import 'package:quiz_app/halaman/halaman_dalam_pengembangan.dart';
 
 class HalamanBerandaAdmin extends StatefulWidget {
   const HalamanBerandaAdmin({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/pages/admin/navbar_admin.dart';
-import 'package:quiz_app/pages/dosen/navbar_dosen.dart';
-import 'package:quiz_app/pages/mahasiswa/navbar_mhs.dart';
+import 'package:quiz_app/halaman/admin/navbar_admin.dart';
+import 'package:quiz_app/halaman/dosen/navbar_dosen.dart';
+import 'package:quiz_app/halaman/mahasiswa/navbar_mhs.dart';
 
 class HalamanAwal extends StatefulWidget {
   const HalamanAwal({super.key});

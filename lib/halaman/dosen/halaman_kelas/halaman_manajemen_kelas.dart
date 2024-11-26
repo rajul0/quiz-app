@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/pages/dosen/halaman_kelas/halaman_buat_kuis.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_buat_kuis.dart';
 
 class HalamanManajemenKelasDosen extends StatefulWidget {
   const HalamanManajemenKelasDosen({super.key});

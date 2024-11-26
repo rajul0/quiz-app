@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/pages/mahasiswa/daftar_quiz_mhs.dart';
-import 'package:quiz_app/pages/mahasiswa/hasil_quiz_mhs.dart';
+import 'package:quiz_app/halaman/mahasiswa/daftar_quiz_mhs.dart';
+import 'package:quiz_app/halaman/mahasiswa/hasil_quiz_mhs.dart';
 
 class BerandaMahasiswa extends StatefulWidget {
   const BerandaMahasiswa({super.key});

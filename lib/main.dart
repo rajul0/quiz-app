@@ -1,8 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz_app/pages/halaman_awal.dart';
+import 'package:quiz_app/halaman/halaman_awal.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Inisialisasi Firebase
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

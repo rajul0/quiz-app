@@ -1,26 +1,20 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz_app/pages/admin/beranda_admin.dart';
-import 'package:quiz_app/pages/halaman_dalam_pengembangan.dart';
+import 'package:quiz_app/halaman/dosen/beranda_dosen.dart';
+import 'package:quiz_app/halaman/halaman_dalam_pengembangan.dart';
 
-class NavbarAdmin extends StatefulWidget {
-  const NavbarAdmin({super.key});
+class NavbarDosen extends StatefulWidget {
+  const NavbarDosen({super.key});
 
   @override
-  State<NavbarAdmin> createState() => _BerandaMahasiswaState();
+  State<NavbarDosen> createState() => _NavbarDosenState();
 }
 
-class _BerandaMahasiswaState extends State<NavbarAdmin> {
-  // ignore: unused_field
-  String _searchKeyword = "";
-
-  // ignore: unused_field
-  String _errorMessage = '';
+class _NavbarDosenState extends State<NavbarDosen> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    HalamanBerandaAdmin(),
-    HalamanDalamPengembangan(),
+    BerandaDosen(),
     HalamanDalamPengembangan(),
   ];
 
@@ -39,7 +33,6 @@ class _BerandaMahasiswaState extends State<NavbarAdmin> {
           },
           items: [
             Image.asset("assets/icon/home-ic.png", width: 25.0),
-            Image.asset("assets/icon/manage-people-ic.png", width: 35.0),
             Image.asset("assets/icon/profil-ic.png", width: 25.0)
           ]),
     );

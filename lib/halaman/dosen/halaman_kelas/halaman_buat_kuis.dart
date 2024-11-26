@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/pages/dosen/halaman_kelas/halaman_kuis.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_kuis.dart';
+import 'package:quiz_app/proses/proses_kuis.dart';
 
 class HalamanBuatKuis extends StatefulWidget {
   const HalamanBuatKuis({super.key});
@@ -12,18 +13,24 @@ class _BerandaMahasiswaState extends State<HalamanBuatKuis> {
   final _formKey = GlobalKey<FormState>();
   final _textController = TextEditingController();
 
+  String idKuis = '';
+
   @override
   void dispose() {
     _textController.dispose(); // Bersihkan controller saat widget dihancurkan
     super.dispose();
   }
 
-  void _buatKuis() {
+  void _buatKuis() async {
     if (_formKey.currentState!.validate()) {
       // Ambil data dari TextFormField
       final namaKuis = _textController.text;
-
-      // Lakukan sesuatu dengan data, misalnya tampilkan di dialog
+      try {
+        idKuis = await buatKuis(namaKuis);
+        print(idKuis);
+      } catch (e) {
+        print(e);
+      }
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -34,7 +41,8 @@ class _BerandaMahasiswaState extends State<HalamanBuatKuis> {
               onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HalamanKuis(namaKuis: namaKuis))),
+                      builder: (context) =>
+                          HalamanKuis(idKuis: idKuis, namaKuis: namaKuis))),
               child: Text(
                 'OK',
                 style: TextStyle(color: Colors.black),

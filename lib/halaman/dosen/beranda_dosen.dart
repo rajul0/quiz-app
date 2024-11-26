@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/pages/dosen/halaman_kelas/halaman_manajemen_kelas.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_manajemen_kelas.dart';
 
 class BerandaDosen extends StatefulWidget {
   const BerandaDosen({super.key});
