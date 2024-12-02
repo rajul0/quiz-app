@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_buat_pertanyaan/halaman_buat_pertanyaan_essai.dart';
 import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_buat_pertanyaan/halaman_buat_pertanyaan_ganda.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_buat_pertanyaan/halaman_buat_pertanyaan_isian_singkat.dart';
 import 'package:quiz_app/halaman/dosen/navbar_dosen.dart';
 import 'package:quiz_app/proses/proses_kuis.dart';
 
@@ -23,6 +25,42 @@ class _HalamanKuisState extends State<HalamanKuis> {
     );
   }
 
+  Future _showBackDialog() {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Kuis harus memiliki minimal 1 pertanyaan, buat pertanyaan?',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18.0,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              _hapusKuis();
+            },
+            child: Text(
+              'Hapus',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 14.0,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              "Tambah pertanyaan",
+              style: TextStyle(color: Colors.black, fontSize: 14.0),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,44 +72,26 @@ class _HalamanKuisState extends State<HalamanKuis> {
           ),
           child: Column(
             children: [
+              PopScope(
+                child: SizedBox(),
+                canPop: false,
+                onPopInvoked: (
+                  bool didPop,
+                ) async {
+                  if (didPop) {
+                    return;
+                  }
+                  final bool shouldPop = await _showBackDialog() ?? false;
+                  if (context.mounted && shouldPop) {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
               Align(
                 alignment: Alignment.topLeft,
                 child: IconButton(
                     onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text(
-                            'Kuis harus memiliki minimal 1 pertanyaan, buat pertanyaan?',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.0,
-                            ),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                _hapusKuis();
-                              },
-                              child: Text(
-                                'Hapus',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text(
-                                "Tambah pertanyaan",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14.0),
-                              ),
-                            )
-                          ],
-                        ),
-                      );
+                      _showBackDialog();
                     },
                     iconSize: 25.0,
                     icon: Icon(
@@ -106,7 +126,7 @@ class _HalamanKuisState extends State<HalamanKuis> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -140,7 +160,7 @@ class _HalamanKuisState extends State<HalamanKuis> {
                               fontSize: 18,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 30),
+                        SizedBox(height: 30.0),
                         ElevatedButton(
                           onPressed: () {
                             Navigator.push(
@@ -164,7 +184,18 @@ class _HalamanKuisState extends State<HalamanKuis> {
                         ),
                         SizedBox(height: 15),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    HalamanBuatPertanyaanIsianSingkat(
+                                  idKuis: widget.idKuis,
+                                  namaKuis: widget.namaKuis,
+                                ),
+                              ),
+                            );
+                          },
                           child: Text(
                             'Isian singkat',
                             style: TextStyle(
@@ -175,7 +206,18 @@ class _HalamanKuisState extends State<HalamanKuis> {
                         ),
                         SizedBox(height: 15),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    HalamanBuatPertanyaanEssai(
+                                  idKuis: widget.idKuis,
+                                  namaKuis: widget.namaKuis,
+                                ),
+                              ),
+                            );
+                          },
                           child: Text(
                             'Essai',
                             style: TextStyle(

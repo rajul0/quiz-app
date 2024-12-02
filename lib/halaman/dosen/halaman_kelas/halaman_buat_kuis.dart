@@ -25,32 +25,68 @@ class _BerandaMahasiswaState extends State<HalamanBuatKuis> {
     if (_formKey.currentState!.validate()) {
       // Ambil data dari TextFormField
       final namaKuis = _textController.text;
-      try {
-        idKuis = await buatKuis(namaKuis);
-        print(idKuis);
-      } catch (e) {
-        print(e);
-      }
+
+      // Menampilkan dialog loading
       showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Kuis berhasil dibuat'),
-          content: Text('Nama kuis : $namaKuis'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          HalamanKuis(idKuis: idKuis, namaKuis: namaKuis))),
-              child: Text(
-                'OK',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-          ],
+        barrierDismissible: false, // Mencegah dialog ditutup tanpa selesai
+        builder: (context) => Center(
+          child: CircularProgressIndicator(),
         ),
       );
+
+      try {
+        // Proses pembuatan kuis di Firebase
+        idKuis = await buatKuis(namaKuis);
+
+        // Menutup dialog loading setelah berhasil
+        Navigator.pop(context);
+
+        // Menampilkan dialog sukses
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Kuis berhasil dibuat'),
+            content: Text('Nama kuis : $namaKuis'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        HalamanKuis(idKuis: idKuis, namaKuis: namaKuis),
+                  ),
+                ),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
+          ),
+        );
+      } catch (e) {
+        // Menutup dialog loading jika terjadi kesalahan
+        Navigator.pop(context);
+
+        // Menampilkan dialog error
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Error'),
+            content: Text('Terjadi kesalahan: $e'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'Tutup',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
     }
   }
 

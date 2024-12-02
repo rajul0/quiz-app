@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/halaman/dosen/navbar_dosen.dart';
-import 'package:quiz_app/proses/proses_kuis.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_buat_pertanyaan/halaman_buat_pertanyaan_essai.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_buat_pertanyaan/halaman_buat_pertanyaan_isian_singkat.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_kuis.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:quiz_app/proses/proses_kuis.dart';
 
 class HalamanBuatPertanyaanGanda extends StatefulWidget {
   final String idKuis;
@@ -19,9 +21,15 @@ class _HalamanBuatPertanyaanGandaState
     extends State<HalamanBuatPertanyaanGanda> {
   final _formKey = GlobalKey<FormState>();
 
-  int time = 30;
-  int point = 1;
-  String jenisPertanyaan = 'Pilihan ganda';
+  int _time = 30;
+  int _point = 1;
+  String _jenisPertanyaan = 'Pilihan ganda';
+
+  List<String> _semuaJenisPertanyaan = [
+    "Pilihan ganda",
+    "Isian singkat",
+    "Essai"
+  ];
 
   final TextEditingController pertanyaan = TextEditingController();
   final TextEditingController jawaban1 = TextEditingController();
@@ -29,78 +37,149 @@ class _HalamanBuatPertanyaanGandaState
   final TextEditingController jawaban3 = TextEditingController();
   final TextEditingController jawaban4 = TextEditingController();
 
-  void _hapusKuis() {
-    hapusKuis(widget.idKuis);
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => NavbarDosen()),
-      (route) => false,
-    );
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      Map<String, dynamic> dataPertanyaan = {
+        'jenis_pertanyaan': _jenisPertanyaan,
+        'waktu': _time,
+        'nilai': _point,
+        'pertanyaan': pertanyaan.text,
+        'jawaban': {
+          'opsi 1': jawaban1.text,
+          'opsi 2': jawaban2.text,
+          'opsi 3': jawaban3.text,
+          'opsi 4': jawaban4.text,
+        }
+      };
+
+      showDialog(
+        context: context,
+        barrierDismissible: false, // Mencegah dialog ditutup tanpa selesai
+        builder: (context) => Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+
+      try {
+        await tambahPertanyaan(widget.idKuis, dataPertanyaan);
+
+        // Menutup dialog loading setelah berhasil
+        Navigator.pop(context);
+
+        // Menampilkan dialog sukses
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Pertanyaan ditambah')),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                HalamanKuis(idKuis: widget.idKuis, namaKuis: widget.namaKuis),
+          ),
+        );
+      } catch (e) {
+        // Menutup dialog loading jika terjadi kesalahan
+        Navigator.pop(context);
+
+        // Menampilkan dialog error
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Error'),
+            content: Text('Terjadi kesalahan: $e'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'Tutup',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+    }
   }
 
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      // Proses data jika valid
-      print('Field 1: ${pertanyaan.text}');
-      print('Field 2: ${jawaban1.text}');
-      print('Field 3: ${jawaban2.text}');
-      print('Field 4: ${jawaban3.text}');
-      print('Field 5: ${jawaban4.text}');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form Submitted!')),
-      );
-    }
+  Future _showBackDialog() {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Perubahan tidak akan disimpan, yakin ingin menghapus?',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18.0,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HalamanKuis(
+                      idKuis: widget.idKuis, namaKuis: widget.namaKuis),
+                ),
+                (route) => false,
+              );
+            },
+            child: Text(
+              'Hapus',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 14.0,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              "Lanjutkan mengedit",
+              style: TextStyle(color: Colors.black, fontSize: 14.0),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    final double screenWidth = screenSize.width;
+    final double screenHeight = screenSize.height;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            vertical: 67.0,
+            vertical: 65.0,
             horizontal: 15.0,
           ),
           child: Column(
             children: [
+              PopScope(
+                child: SizedBox(),
+                canPop: false,
+                onPopInvoked: (
+                  bool didPop,
+                ) async {
+                  if (didPop) {
+                    return;
+                  }
+                  final bool shouldPop = await _showBackDialog() ?? false;
+                  if (context.mounted && shouldPop) {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
               Align(
                 alignment: Alignment.topLeft,
                 child: IconButton(
                     onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text(
-                            'Kuis harus memiliki minimal 1 pertanyaan, buat pertanyaan?',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.0,
-                            ),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                // _hapusKuis();
-                              },
-                              child: Text(
-                                'Hapus',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text(
-                                "Tambah pertanyaan",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14.0),
-                              ),
-                            )
-                          ],
-                        ),
-                      );
+                      _showBackDialog();
                     },
                     iconSize: 25.0,
                     icon: Icon(
@@ -129,6 +208,7 @@ class _HalamanBuatPertanyaanGandaState
                       child: TextFormField(
                         controller: pertanyaan,
                         textAlign: TextAlign.center,
+                        maxLines: null,
                         decoration: InputDecoration(
                           labelText: 'Masukkan pertanyaan anda',
                           border: InputBorder.none,
@@ -196,10 +276,6 @@ class _HalamanBuatPertanyaanGandaState
                     ),
                     SizedBox(height: 24),
                     // Submit Button
-                    ElevatedButton(
-                      onPressed: _submitForm,
-                      child: Text('Submit'),
-                    ),
                   ],
                 ),
               )
@@ -215,20 +291,130 @@ class _HalamanBuatPertanyaanGandaState
         children: [
           SpeedDialChild(
             child: Icon(Icons.check_box),
-            label: '$point point',
-            onTap: () => print('Point pertanyaan'),
+            label: '$_point point',
+            onTap: () async {
+              int? selected = await showMenu<int>(
+                context: context,
+                position: RelativeRect.fromLTRB(
+                  screenWidth / 2,
+                  screenHeight / 1.5,
+                  80,
+                  0,
+                ), // Atur posisi sesuai kebutuhan
+                items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((int value) {
+                  return PopupMenuItem<int>(
+                    value: value,
+                    child: Text('$value'),
+                  );
+                }).toList(),
+              );
+
+              if (selected != null) {
+                setState(() {
+                  _point = selected;
+                });
+              }
+            },
           ),
           SpeedDialChild(
             child: Icon(Icons.access_time),
-            label: '$time detik',
-            onTap: () => print('Waktu pertanyaan'),
+            label: '$_time detik',
+            onTap: () async {
+              int? selected = await showMenu<int>(
+                context: context,
+                position: RelativeRect.fromLTRB(
+                  screenWidth / 2,
+                  screenHeight / 1.5,
+                  80,
+                  0,
+                ), // Atur posisi sesuai kebutuhan
+                items: [
+                  5,
+                  10,
+                  15,
+                  20,
+                  30,
+                  45,
+                  60,
+                ].map((int value) {
+                  return PopupMenuItem<int>(
+                    value: value,
+                    child: Text('$value detik'),
+                  );
+                }).toList(),
+              );
+
+              if (selected != null) {
+                setState(() {
+                  _time = selected;
+                });
+              }
+            },
           ),
           SpeedDialChild(
             child: Icon(Icons.check_circle),
-            label: '$jenisPertanyaan',
-            onTap: () => print('Jenis pertanyaan'),
+            label: '$_jenisPertanyaan',
+            onTap: () async {
+              int? selected = await showMenu<int>(
+                context: context,
+                position: RelativeRect.fromLTRB(
+                  screenWidth / 2,
+                  screenHeight / 1.5,
+                  80,
+                  0,
+                ), // Atur posisi sesuai kebutuhan
+                items: [0, 1, 2].map((int value) {
+                  return PopupMenuItem<int>(
+                    value: value,
+                    child: Text(_semuaJenisPertanyaan[value]),
+                  );
+                }).toList(),
+              );
+
+              if (selected != null) {
+                setState(() {
+                  _jenisPertanyaan = _semuaJenisPertanyaan[selected];
+                });
+                if (_jenisPertanyaan == "Isian singkat") {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HalamanBuatPertanyaanIsianSingkat(
+                            namaKuis: widget.namaKuis, idKuis: widget.idKuis)),
+                    (route) => false,
+                  );
+                } else if (_jenisPertanyaan == "Essai") {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HalamanBuatPertanyaanEssai(
+                          namaKuis: widget.namaKuis, idKuis: widget.idKuis),
+                    ),
+                    (route) => false,
+                  );
+                }
+              }
+            },
           ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        padding: EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () {
+            _submitForm();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xFFE6E6FA), // Warna latar tombol
+            foregroundColor: Colors.black, // Warna teks tombol
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            textStyle: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          child: Text('Simpan pertanyaan'),
+        ),
       ),
     );
   }
