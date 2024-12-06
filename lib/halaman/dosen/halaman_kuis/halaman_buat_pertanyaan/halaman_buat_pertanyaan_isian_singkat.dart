@@ -1,33 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_buat_pertanyaan/halaman_buat_pertanyaan_ganda.dart';
-import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_buat_pertanyaan/halaman_buat_pertanyaan_isian_singkat.dart';
-import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_kuis.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kuis/halaman_buat_pertanyaan/halaman_buat_pertanyaan_essai.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kuis/halaman_buat_pertanyaan/halaman_buat_pertanyaan_ganda.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kuis/halaman_kuis.dart';
 
-class HalamanBuatPertanyaanEssai extends StatefulWidget {
+class HalamanBuatPertanyaanIsianSingkat extends StatefulWidget {
   final String idKuis;
   final String namaKuis;
-  const HalamanBuatPertanyaanEssai(
+  const HalamanBuatPertanyaanIsianSingkat(
       {Key? key, required this.idKuis, required this.namaKuis})
       : super(key: key);
 
   @override
-  State<HalamanBuatPertanyaanEssai> createState() =>
-      _HalamanBuatPertanyaanEssaiState();
+  State<HalamanBuatPertanyaanIsianSingkat> createState() =>
+      _HalamanBuatPertanyaanIsianSingkatState();
 }
 
-class _HalamanBuatPertanyaanEssaiState
-    extends State<HalamanBuatPertanyaanEssai> {
+class _HalamanBuatPertanyaanIsianSingkatState
+    extends State<HalamanBuatPertanyaanIsianSingkat> {
   int _time = 30;
   int _point = 1;
-  String _jenisPertanyaan = 'Essai';
+  String _jenisPertanyaan = 'Isian singkat';
 
   List<String> _semuaJenisPertanyaan = [
     "Pilihan ganda",
     "Isian singkat",
     "Essai"
   ];
-
   Future _showBackDialog() {
     return showDialog(
       context: context,
@@ -94,15 +93,6 @@ class _HalamanBuatPertanyaanEssaiState
               }
             },
           ),
-          SizedBox(
-            height: 100.0,
-          ),
-          GestureDetector(
-            onTap: () {
-              _showBackDialog();
-            },
-            child: Text("Kembali"),
-          )
         ],
       ),
       floatingActionButton: SpeedDial(
@@ -197,19 +187,19 @@ class _HalamanBuatPertanyaanEssaiState
                 setState(() {
                   _jenisPertanyaan = _semuaJenisPertanyaan[selected];
                 });
-                if (_jenisPertanyaan == "Isian singkat") {
+                if (_jenisPertanyaan == "Pilihan ganda") {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => HalamanBuatPertanyaanIsianSingkat(
+                        builder: (context) => HalamanBuatPertanyaanGanda(
                             namaKuis: widget.namaKuis, idKuis: widget.idKuis)),
                     (route) => false,
                   );
-                } else if (_jenisPertanyaan == "Pilihan ganda") {
+                } else if (_jenisPertanyaan == "Essai") {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => HalamanBuatPertanyaanGanda(
+                      builder: (context) => HalamanBuatPertanyaanEssai(
                           namaKuis: widget.namaKuis, idKuis: widget.idKuis),
                     ),
                     (route) => false,

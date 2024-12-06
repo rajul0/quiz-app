@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_buat_kuis.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kuis/halaman_buat_kuis.dart';
 
 class HalamanManajemenKelasDosen extends StatefulWidget {
   const HalamanManajemenKelasDosen({super.key});
@@ -108,7 +108,9 @@ class _BerandaMahasiswaState extends State<HalamanManajemenKelasDosen> {
                 height: 45.0,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, '/halaman-daftar-kuis');
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 15.0),
                   width: 160.0,
@@ -121,14 +123,14 @@ class _BerandaMahasiswaState extends State<HalamanManajemenKelasDosen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(
-                        Icons.edit_note,
+                        Icons.list_alt,
                         size: 35.0,
                       ),
                       SizedBox(
                         width: 15.0,
                       ),
                       Text(
-                        "Edit Kuis",
+                        "Daftar Kuis",
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 14.0,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_buat_pertanyaan/halaman_buat_pertanyaan_essai.dart';
-import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_buat_pertanyaan/halaman_buat_pertanyaan_isian_singkat.dart';
-import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_kuis.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kuis/halaman_buat_pertanyaan/halaman_buat_pertanyaan_essai.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kuis/halaman_buat_pertanyaan/halaman_buat_pertanyaan_isian_singkat.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kuis/halaman_kuis.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:quiz_app/proses/proses_kuis.dart';
 
@@ -24,6 +24,7 @@ class _HalamanBuatPertanyaanGandaState
   int _time = 30;
   int _point = 1;
   String _jenisPertanyaan = 'Pilihan ganda';
+  String? jawaban;
 
   List<String> _semuaJenisPertanyaan = [
     "Pilihan ganda",
@@ -39,18 +40,21 @@ class _HalamanBuatPertanyaanGandaState
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      Map<String, dynamic> dataPertanyaan = {
-        'jenis_pertanyaan': _jenisPertanyaan,
-        'waktu': _time,
-        'nilai': _point,
-        'pertanyaan': pertanyaan.text,
-        'jawaban': {
-          'opsi 1': jawaban1.text,
-          'opsi 2': jawaban2.text,
-          'opsi 3': jawaban3.text,
-          'opsi 4': jawaban4.text,
+      List<Map<String, dynamic>> dataPertanyaan = [
+        {
+          'jenis_pertanyaan': _jenisPertanyaan,
+          'waktu_pertanyaan': _time,
+          'nilai': _point,
+          'pertanyaan': pertanyaan.text,
+          'opsi': [
+            jawaban1.text,
+            jawaban2.text,
+            jawaban3.text,
+            jawaban4.text,
+          ],
+          'jawaban': jawaban,
         }
-      };
+      ];
 
       showDialog(
         context: context,
@@ -403,7 +407,12 @@ class _HalamanBuatPertanyaanGandaState
         padding: EdgeInsets.all(16.0),
         child: ElevatedButton(
           onPressed: () {
-            _submitForm();
+            popUpTanyaJawaban(context, [
+              jawaban1.text,
+              jawaban2.text,
+              jawaban3.text,
+              jawaban4.text,
+            ]);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Color(0xFFE6E6FA), // Warna latar tombol
@@ -416,6 +425,51 @@ class _HalamanBuatPertanyaanGandaState
           child: Text('Simpan pertanyaan'),
         ),
       ),
+    );
+  }
+
+  Future<void> popUpTanyaJawaban(
+      BuildContext context, List<String> options) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Yang mana jawabannya?'),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: options.map((option) {
+                  return RadioListTile<String>(
+                    title: Text(option),
+                    value: option,
+                    groupValue: jawaban,
+                    onChanged: (value) {
+                      setState(() {
+                        jawaban = value;
+                      });
+                    },
+                  );
+                }).toList(),
+              );
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Tutup dialog tanpa menyimpan
+              },
+              child: Text('Batal'),
+            ),
+            TextButton(
+              onPressed: () {
+                _submitForm();
+              },
+              child: Text('Submit'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

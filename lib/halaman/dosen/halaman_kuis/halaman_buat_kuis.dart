@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_kuis.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kuis/halaman_kuis.dart';
 import 'package:quiz_app/proses/proses_kuis.dart';
 
 class HalamanBuatKuis extends StatefulWidget {
@@ -37,7 +37,9 @@ class _BerandaMahasiswaState extends State<HalamanBuatKuis> {
 
       try {
         // Proses pembuatan kuis di Firebase
-        idKuis = await buatKuis(namaKuis);
+        var dataKuis = await buatKuis(namaKuis) ?? '';
+        print(dataKuis);
+        idKuis = (dataKuis['id']).toString();
 
         // Menutup dialog loading setelah berhasil
         Navigator.pop(context);
@@ -54,7 +56,7 @@ class _BerandaMahasiswaState extends State<HalamanBuatKuis> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        HalamanKuis(idKuis: idKuis, namaKuis: namaKuis),
+                        HalamanKuis(idKuis: idKuis, namaKuis: dataKuis['nama']),
                   ),
                 ),
                 child: Text(

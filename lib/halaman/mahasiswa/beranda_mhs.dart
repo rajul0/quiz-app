@@ -94,6 +94,42 @@ class _BerandaMahasiswaState extends State<BerandaMahasiswa> {
               SizedBox(
                 height: 90.0,
               ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    width: 150,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(25.0)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.add_circle),
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        Text(
+                          "Gabung Kuis",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 25.0,
+              ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
