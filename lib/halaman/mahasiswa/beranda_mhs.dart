@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/halaman/mahasiswa/daftar_quiz_mhs.dart';
+import 'package:quiz_app/halaman/mahasiswa/halaman_kuis_mhs/halaman_gabung_kuis.dart';
 import 'package:quiz_app/halaman/mahasiswa/hasil_quiz_mhs.dart';
 
 class BerandaMahasiswa extends StatefulWidget {
@@ -97,7 +98,12 @@ class _BerandaMahasiswaState extends State<BerandaMahasiswa> {
               Align(
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HalamanGabungKuis()));
+                  },
                   child: Container(
                     width: 150,
                     height: 50,

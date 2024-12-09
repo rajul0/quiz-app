@@ -17,6 +17,17 @@ Future<List<Quiz>> daftarSemuaKuis() async {
   }
 }
 
+Future<Map<String, dynamic>> getQuizById(idKuis) async {
+  final response = await http.get(Uri.parse('$apiUrl/api/kuis/$idKuis'));
+  print(response.body);
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> data = json.decode(response.body);
+    return data;
+  } else {
+    throw Exception('Failed to load quizzes');
+  }
+}
+
 Future buatKuis(String namaKuis) async {
   if (namaKuis.isNotEmpty) {
     try {
