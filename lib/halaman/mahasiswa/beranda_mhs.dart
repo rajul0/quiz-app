@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/halaman/mahasiswa/daftar_quiz_mhs.dart';
 import 'package:quiz_app/halaman/mahasiswa/halaman_kuis_mhs/halaman_gabung_kuis.dart';
-import 'package:quiz_app/halaman/mahasiswa/hasil_quiz_mhs.dart';
+import 'package:quiz_app/halaman/mahasiswa/halaman_kuis_mhs/halaman_riwayat_kuis_MHS.dart';
 
 class BerandaMahasiswa extends StatefulWidget {
   const BerandaMahasiswa({super.key});
@@ -173,7 +173,7 @@ class _BerandaMahasiswaState extends State<BerandaMahasiswa> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => HalamanHasilQuizMHS()));
+                          builder: (context) => HalamanDaftarRiwayatKuisMhs()));
                 },
                 child: Container(
                   width: double.infinity,

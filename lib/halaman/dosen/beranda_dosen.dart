@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/halaman/dosen/halaman_kelas/halaman_manajemen_kelas.dart';
+import 'package:quiz_app/halaman/dosen/halaman_kuis/halaman_hasil_kuis.dart';
 
 class BerandaDosen extends StatefulWidget {
   const BerandaDosen({super.key});
@@ -143,10 +144,10 @@ class _BerandaMahasiswaState extends State<BerandaDosen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => HalamanHasilQuizMHS()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HalamanHasilKuisDosen()));
                     },
                     child: Container(
                       width: 140.0,

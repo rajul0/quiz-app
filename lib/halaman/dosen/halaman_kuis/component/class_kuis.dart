@@ -23,3 +23,23 @@ class Quiz {
     };
   }
 }
+
+class QuizHistoryByid {
+  final int id;
+  final int nilai;
+  final String attemptDate;
+
+  QuizHistoryByid({
+    required this.id,
+    required this.nilai,
+    required this.attemptDate,
+  });
+
+  factory QuizHistoryByid.fromJson(Map<String, dynamic> json) {
+    return QuizHistoryByid(
+      id: json['id'],
+      nilai: json['nilai'],
+      attemptDate: json['attempt_date'],
+    );
+  }
+}

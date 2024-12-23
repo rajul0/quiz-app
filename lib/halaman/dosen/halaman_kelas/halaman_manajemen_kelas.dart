@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/halaman/dosen/halaman_kuis/halaman_buat_kuis.dart';
+import 'package:quiz_app/halaman/dosen/navbar_dosen.dart';
 
 class HalamanManajemenKelasDosen extends StatefulWidget {
   const HalamanManajemenKelasDosen({super.key});
@@ -22,7 +23,11 @@ class _BerandaMahasiswaState extends State<HalamanManajemenKelasDosen> {
                 alignment: Alignment.topLeft,
                 child: IconButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NavbarDosen()),
+                          (route) => false);
                     },
                     iconSize: 25.0,
                     icon: Icon(

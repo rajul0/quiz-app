@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      // supportedLocales: [Locale('id', 'ID')],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFE6E6FA)),
         useMaterial3: true,

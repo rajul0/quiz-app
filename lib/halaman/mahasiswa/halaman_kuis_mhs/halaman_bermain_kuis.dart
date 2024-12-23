@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/halaman/mahasiswa/halaman_kuis_mhs/halaman_kuis_mhs.dart';
+import 'package:quiz_app/proses/proses_kuis.dart';
 
 class HalamanBermainKuis extends StatefulWidget {
   final Map<String, dynamic> kuis;
@@ -16,12 +18,12 @@ class _HalamanBermainKuisState extends State<HalamanBermainKuis> {
   int _remainingTime = 0;
   late Timer _timer;
   bool isPaused = false;
-  String? idKuis;
+  int? idKuis;
 
   @override
   void initState() {
     super.initState();
-    // idKuis = widget.kuis["id"];
+    idKuis = widget.kuis["id"];
     _startTimer();
   }
 
@@ -74,6 +76,8 @@ class _HalamanBermainKuisState extends State<HalamanBermainKuis> {
       });
       _startTimer(); // Restart timer untuk pertanyaan berikutnya
     } else {
+      print(idKuis);
+      simpanRiwayatKuis(idKuis!, 3, _score);
       _showScoreDialog();
     }
   }
@@ -88,9 +92,13 @@ class _HalamanBermainKuisState extends State<HalamanBermainKuis> {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          HalamanKuisMhs(idKuis: idKuis.toString())));
             },
-            child: Text('Kembali ke Beranda'),
+            child: Text('Kembali'),
           ),
         ],
       ),

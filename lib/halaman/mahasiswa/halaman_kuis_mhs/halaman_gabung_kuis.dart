@@ -37,7 +37,7 @@ class _BerandaMahasiswaState extends State<HalamanGabungKuis> {
 
       try {
         // Proses pembuatan kuis di Firebase
-        var dataKuis = await getQuizById(idKuis);
+        var dataKuis = await getAvailableQuizById(idKuis);
         print(dataKuis);
         namaKuis = (dataKuis['nama']);
 
@@ -75,8 +75,9 @@ class _BerandaMahasiswaState extends State<HalamanGabungKuis> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Error'),
-            content: Text('Terjadi kesalahan: $e'),
+            title: Text('Kuis'),
+            content:
+                Text('Kuis belum dimulai, sudah berakhir atau tidak tersedia'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
